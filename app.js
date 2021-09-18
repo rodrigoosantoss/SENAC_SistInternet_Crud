@@ -2,17 +2,34 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+//routes busca
+app.get('/produtos', (req, res) => {
+  res.send('Listar Produtos')
 })
 
-app.get('/hello', (req, res) => {
-    res.send('Hello EveryBody!')
+//routes busca por id
+app.get('/produtos/:id', (req, res) => {
+    res.send('Buscar pelo id => ' + req.params.id)
   })
   
+//routes adicionar produto
+app.post('/produtos', (req, res) => {
+    res.send('Adicionar Produto')
+  })
+
+//routes alterar produto
+app.put('/produtos/:id', (req, res) => {
+    res.send('Alterar Produto => '+ req.params.id)
+  })
+
+//routes deletar produto
+app.delete('/produtos/:id', (req, res) => {
+    res.send('Deletar Produto => '+ req.params.id)
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
-console.log("server called listen...");
+console.log("server called listen - server is on...");
