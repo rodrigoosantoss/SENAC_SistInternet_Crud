@@ -1,20 +1,42 @@
 const express = require('express')
 const app = express()
+// const fs = require('fs')
 const port = 3000
+
+const produtos = [
+    {id: 1, nome:"produto1", preco:11},
+    {id: 2, nome:"produto2", preco:22},
+    {id: 3, nome:"produto1", preco:33}
+]
+
+let idGerado = 4;
+
+// const produtos2 = JSON.parse(fs.readFileSync("./bd.json", "utf8"));
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 //routes busca
 app.get('/produtos', (req, res) => {
-  res.send('Listar Produtos')
+  res.json(produtos)
 })
 
 //routes busca por id
 app.get('/produtos/:id', (req, res) => {
-    res.send('Buscar pelo id => ' + req.params.id)
+    for (const produto of produtos) {
+        if(req.params.id == produto.id){
+            res.json(produto);
+        }
+    }
+    res.status(404).json({erro: "Produto nao encontrado!"})
   })
   
 //routes adicionar produto
 app.post('/produtos', (req, res) => {
-    res.status(201).send('Produto '+req.params+ ' adicionado')
+    const novoProduto = req.body;
+    novoProduto.id = idGerado++;
+    produtos.push(novoProduto);
+    res.status(201).send('Produto adicionado com sucesso!');
   })
 
 //routes alterar produto
