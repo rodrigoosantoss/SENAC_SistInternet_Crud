@@ -14,7 +14,7 @@ app.get('/produtos/:id', (req, res) => {
   
 //routes adicionar produto
 app.post('/produtos', (req, res) => {
-    res.send('Adicionar Produto')
+    res.status(201).send('Produto '+req.params+ ' adicionado')
   })
 
 //routes alterar produto
